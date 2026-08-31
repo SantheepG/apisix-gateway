@@ -1,0 +1,33 @@
+apisix:
+  node_listen: 9080
+
+deployment:
+  role: traditional
+
+  role_traditional:
+    config_provider: etcd
+
+  etcd:
+    host:
+      - "http://etcd:2379"
+    prefix: "/apisix"
+    timeout: 30
+
+  admin:
+    enable_admin_ui: true
+    
+    allow_admin:
+      - 0.0.0.0/0
+
+    admin_key:
+      - name: admin
+        role: admin
+        key: CqfohaRnAOtlwRmwyDTJctBlayksAdrf
+
+nginx_config:
+  http:
+    enable_access_log: true
+    access_log_format: '{"time":"$time_iso8601","remote_addr":"$remote_addr","request":"$request","status":"$status","request_time":"$request_time","upstream_addr":"$upstream_addr","upstream_status":"$upstream_status","upstream_response_time":"$upstream_response_time"}'
+    access_log_format_escape: json
+
+  error_log_level: "info"
